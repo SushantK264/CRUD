@@ -1,9 +1,15 @@
 package com.project.emp.Model;
 
+import org.hibernate.validator.constraints.UniqueElements;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.Size;
 
 
 @Entity
@@ -11,8 +17,17 @@ public class Student {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int id;
+	
+	@NotBlank(message= "Student name cannot be empty")
+	@Size(min = 2,max = 50,message="Student name must between 2 to 50 character")
 	private String name;
+	
+	@NotBlank(message="Email is Required")
+	@Column(unique = true)
+	@Email(message="Must be Valid Email address")
 	private String email;
+	
+	@NotBlank(message="City cannot be Empty")
 	private String city;
 	
 	

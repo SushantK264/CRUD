@@ -2,6 +2,7 @@ package com.project.emp.Controller;
 
 import java.util.List;
 
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -13,7 +14,11 @@ import org.springframework.web.bind.annotation.RestController;
 import com.project.emp.Model.Student;
 import com.project.emp.Service.StudentService;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Min;
+
 @RestController
+@Validated
 public class StudentController {
 	final StudentService service;
 	
@@ -22,12 +27,12 @@ public class StudentController {
 	}
 	
 	@PostMapping("/add")
-	public Student add (@RequestBody Student s) {
+	public Student add (@Valid @RequestBody Student s) {
 		return service.addStudent(s);
 	}
 	
 	@DeleteMapping("/delete/{id}")
-    public void deleteStudent(@PathVariable int id) {
+    public void deleteStudent(@PathVariable @Min(value=0,message="Id must be Positive") int id) {
         service.deleteStudent(id);
     }
 	
@@ -37,7 +42,7 @@ public class StudentController {
 	}
 	
 	@PutMapping("/update")
-	public Student update(@RequestBody Student s) {
+	public Student update(@Valid @RequestBody Student s) {
 		return service.updateStudent(s);
 	}
 }
