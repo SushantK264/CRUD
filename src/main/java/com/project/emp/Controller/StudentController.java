@@ -4,8 +4,10 @@ import java.util.List;
 
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.project.emp.Model.Student;
@@ -14,19 +16,20 @@ import com.project.emp.Service.StudentService;
 @RestController
 public class StudentController {
 	final StudentService service;
+	
 	public StudentController(StudentService service) {
 		this.service=service;
 	}
 	
 	@PostMapping("/add")
-	public Student Add (Student s) {
+	public Student add (@RequestBody Student s) {
 		return service.addStudent(s);
 	}
 	
-	@DeleteMapping("/delete")
-	public void deleteStudent(Student s) {
-		service.deleteStudent(s);
-	}
+	@DeleteMapping("/delete/{id}")
+    public void deleteStudent(@PathVariable int id) {
+        service.deleteStudent(id);
+    }
 	
 	@GetMapping("/getAll")
 	public List<Student> getAll(){
@@ -34,7 +37,7 @@ public class StudentController {
 	}
 	
 	@PutMapping("/update")
-	public Student update(Student s) {
+	public Student update(@RequestBody Student s) {
 		return service.updateStudent(s);
 	}
 }

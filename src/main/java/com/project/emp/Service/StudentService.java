@@ -19,6 +19,10 @@ public class StudentService {
 		return repo.save(s);
 	}
 	public void deleteStudent(int id) {
+        if (!repo.existsById(id)) {
+            throw new RuntimeException("Cannot delete. Student not found with ID: " + id);
+        }
+        
         repo.deleteById(id);
     }
 	public List<Student> getAll(){
