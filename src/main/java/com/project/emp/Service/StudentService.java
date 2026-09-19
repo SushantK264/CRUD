@@ -2,9 +2,10 @@ package com.project.emp.Service;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
 
+import com.project.emp.Exception.StudentNotFoundException;
 import com.project.emp.Model.Student;
 import com.project.emp.Repository.StudentRepo;
 
@@ -18,13 +19,15 @@ public class StudentService {
 	public Student addStudent(Student s) {
 		return repo.save(s);
 	}
+	
 	public void deleteStudent(int id) {
         if (!repo.existsById(id)) {
-            throw new RuntimeException("Cannot delete. Student not found with ID: " + id);
+            throw new StudentNotFoundException("Cannot delete. Student not found with ID: " + id);
         }
-        
         repo.deleteById(id);
     }
+	
+	
 	public List<Student> getAll(){
 		return repo.findAll();
 	}
